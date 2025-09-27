@@ -1,0 +1,94 @@
+﻿@model AutenticacaoMVC.ViewModels.UsuarioViewModel
+@{
+    Layout = null;
+    ViewData["Title"] = "Crie sua Conta";
+}
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - NomeDoSeuApp</title>
+    <link href="~/css/site.css" rel="stylesheet" />
+    <link href="~/css/login.css" rel="stylesheet" />
+    <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+</head>
+<body>
+    <div class="registration-container">
+        <div class="card registration-card" style="width: 100%; max-width: 480px;">
+            <div class="card-body">
+
+                <div class="logo">
+                    <i class="fas fa-rocket"></i>
+                </div>
+
+                <h3 class="card-title text-center mb-4 fw-bold">Crie sua Conta</h3>
+
+                <form asp-controller="Conta" asp-action="Registrar" method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                    <div class="input-group mb-3">
+                        <span class="input-group-text"><i class="fas fa-user"></i></span>
+                        <input asp-for="NomeUsuario" class="form-control" placeholder="Seu nome de usuário" />
+                    </div>
+                    <span asp-validation-for="NomeUsuario" class="text-danger d-block mb-2"></span>
+
+                    <div class="input-group mb-3">
+                        <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                        <input asp-for="Senha" class="form-control" placeholder="Crie uma senha forte" />
+                        <button class="btn btn-outline-secondary" type="button" id="togglePassword">
+                            <i class="fas fa-eye" id="toggleIcon"></i>
+                        </button>
+                    </div>
+                    <small class="form-text text-muted d-block mb-2">
+                        Use 8+ caracteres com letras, números e símbolos.
+                    </small>
+                    <span asp-validation-for="Senha" class="text-danger d-block mb-2"></span>
+
+
+                    <div class="input-group mb-3">
+                        <span class="input-group-text"><i class="fas fa-check-circle"></i></span>
+                        <input asp-for="ConfirmacaoSenha" class="form-control" placeholder="Confirme sua senha" />
+                    </div>
+                    <span asp-validation-for="ConfirmacaoSenha" class="text-danger d-block mb-3"></span>
+
+                    <div class="d-grid mt-4">
+                        <button type="submit" class="btn btn-primary">Criar Conta</button>
+                    </div>
+
+                    <p class="text-center mt-4 text-muted">
+                        Já tem uma conta? <a href="@Url.Action("Login", "Conta")" class="text-decoration-none fw-bold">Faça Login</a>
+                    </p>
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            $('#togglePassword').on('click', function () {
+                // Seleciona o input da senha
+                const passwordField = $('#Senha');
+                // Pega o tipo atual do input (password ou text)
+                const fieldType = passwordField.attr('type');
+
+                // Alterna o tipo do input e o ícone
+                if (fieldType === 'password') {
+                    passwordField.attr('type', 'text');
+                    $('#toggleIcon').removeClass('fa-eye').addClass('fa-eye-slash');
+                } else {
+                    passwordField.attr('type', 'password');
+                    $('#toggleIcon').removeClass('fa-eye-slash').addClass('fa-eye');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
